@@ -13,7 +13,7 @@ def handle_client(c, count)
 		"\nStudentID:[#{student_id}]"
 	end
 	puts "client_#{count} is coming with #{input}"
-	puts "the message sent back is <#{arg}>"
+	puts "the message sent back is \n<\n#{arg}\n>"
 	puts "It is being executed by thread #{Thread.current[:id]}"
 	c.puts (arg)
 	c.close
@@ -22,8 +22,12 @@ def handle_client(c, count)
 	end
 end
 
-server = TCPServer.open(ARGV[0].to_i)
-thread_pool = ThreadPool.new(10)
+port = 2000
+if ARGV.length != 0 
+	port = ARGV[0].to_i
+end
+server = TCPServer.open(port)
+thread_pool = ThreadPool.new(10)	#to create a thread pool with 10 threads
 puts 'got the thread_pool'
 count = 0
 while true

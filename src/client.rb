@@ -1,6 +1,6 @@
 require 'socket'
 
-host, port = "127.0.0.1", 2000
+host, port = "127.0.0.1", 2030
 
 s = TCPSocket.open(host, port)
 arg = "HELO text\n"
