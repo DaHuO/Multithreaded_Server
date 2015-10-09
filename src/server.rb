@@ -5,13 +5,14 @@ def handle_client(c, count)
 	student_id = 'oldk'
 	input = c.gets
 	p c.remote_address.ip_address
-	arg = "It is executed by thread #{Thread.current[:id]}"
+	arg = "It is executed by thread #{Thread.current[:id]}\n" +
+		"The origin message is #{input}"
 	if input == "HELO text\n"
-		arg = ("HELO text\nIP:[#{c.remote_address.ip_address}]\n" +
+		arg = "HELO text\nIP:[#{c.remote_address.ip_address}]\n" +
 		"Port:[#{c.remote_address.ip_port}]" +
-		"\nStudentID:[#{student_id}]")
+		"\nStudentID:[#{student_id}]"
 	end
-	puts "client_#{count} is coming with " + input
+	puts "client_#{count} is coming with #{input}"
 	puts "the message sent back is <#{arg}>"
 	puts "It is being executed by thread #{Thread.current[:id]}"
 	c.puts (arg)
@@ -32,4 +33,3 @@ while true
 		handle_client(c, count)
 	end
 end
-

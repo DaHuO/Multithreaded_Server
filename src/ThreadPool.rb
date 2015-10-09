@@ -8,8 +8,10 @@ class ThreadPool
 		Array.new(@size) do |i|
 			Thread.new {
 				Thread.current[:id] = i
-				args, job = @jobs.pop
-				job.call(*args)
+				loop do
+					args, job = @jobs.pop
+					job.call(*args)
+				end
 			}
 		end
 	end
@@ -19,5 +21,3 @@ class ThreadPool
 	end
 
 end
-
-
