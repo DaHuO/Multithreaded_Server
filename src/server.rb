@@ -3,22 +3,23 @@ require 'socket'
 
 def handle_client(c, count)
 	student_id = 'oldk'
-	input = c.gets
-	p c.remote_address.ip_address
-	arg = "It is executed by thread #{Thread.current[:id]}\n" +
-		"The origin message is #{input}"
-	if input == "HELO text\n"
-		arg = "HELO text\nIP:[#{c.remote_address.ip_address}]\n" +
-		"Port:[#{c.remote_address.ip_port}]" +
-		"\nStudentID:[#{student_id}]"
-	end
-	puts "client_#{count} is coming with #{input}"
-	puts "the message sent back is \n<\n#{arg}\n>"
-	puts "It is being executed by thread #{Thread.current[:id]}"
-	c.puts (arg)
-	c.close
-	if input == "KILL_SERVICE\n"
-		raise SystemExit
+	while input = c.gets
+		puts 'got one'
+		p c.remote_address.ip_address
+		arg = "It is executed by thread #{Thread.current[:id]}\n" +
+			"The origin message is #{input}"
+		if input == "HELO text\n"
+			arg = "HELO text\nIP:[#{c.remote_address.ip_address}]\n" +
+			"Port:[#{c.remote_address.ip_port}]" +
+			"\nStudentID:[#{student_id}]"
+		end
+		puts "client_#{count} is coming with #{input}"
+		puts "the message sent back is \n<\n#{arg}\n>"
+		puts "It is being executed by thread #{Thread.current[:id]}"
+		c.puts (arg)
+		if input == "KILL_SERVICE\n"
+			raise SystemExit
+		end
 	end
 end
 
@@ -27,7 +28,7 @@ if ARGV.length != 0
 	port = ARGV[0].to_i
 end
 server = TCPServer.open(port)
-thread_pool = ThreadPool.new(10)	#to create a thread pool with 10 threads
+thread_pool = ThreadPool.new(5)	#to create a thread pool with 10 threads
 puts 'got the thread_pool'
 count = 0
 while true
