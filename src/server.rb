@@ -15,9 +15,9 @@ def handle_client(c, count)
 		# end
 		puts "one to four #{input[0,4]}"
 		if input[0,4] == "HELO"
-			arg = "#{input}"+"IP:[#{c.remote_address.ip_address}]\n" +
-			"Port:[#{c.remote_address.ip_port}]" +
-			"\nStudentID:[#{student_id}]"
+			arg = "#{input}"+"IP:#{c.remote_address.ip_address}\n" +
+			"Port:#{c.remote_address.ip_port}" +
+			"\nStudentID:#{student_id}"
 			puts "got there"
 		end
 		puts "client_#{count} is coming with #{input}"
