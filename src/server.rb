@@ -8,10 +8,17 @@ def handle_client(c, count)
 		p c.remote_address.ip_address
 		arg = "It is executed by thread #{Thread.current[:id]}\n" +
 			"The origin message is #{input}"
-		if input == "HELO text\n"
-			arg = "HELO text\nIP:[#{c.remote_address.ip_address}]\n" +
+		# if input == "HELO text\n"
+		# 	arg = "HELO text\nIP:[#{c.remote_address.ip_address}]\n" +
+		# 	"Port:[#{c.remote_address.ip_port}]" +
+		# 	"\nStudentID:[#{student_id}]"
+		# end
+		puts "one to four #{input[0,4]}"
+		if input[0,4] == "HELO"
+			arg = "#{input}"+"IP:[#{c.remote_address.ip_address}]\n" +
 			"Port:[#{c.remote_address.ip_port}]" +
 			"\nStudentID:[#{student_id}]"
+			puts "got there"
 		end
 		puts "client_#{count} is coming with #{input}"
 		puts "the message sent back is \n<\n#{arg}\n>"
@@ -23,7 +30,7 @@ def handle_client(c, count)
 	end
 end
 
-port = 2000
+port = 3457 
 if ARGV.length != 0 
 	port = ARGV[0].to_i
 end
