@@ -5,12 +5,10 @@ require 'net/http'
 def handle_client(c, count, server)
 	student_id = 'oldk'
 	while input = c.gets
-		puts 'got one'
 		p c.remote_address.ip_address
 		arg = input
 
-		puts "one to four #{input[0,4]}"
-		if input[0,4] == "HELO"
+		if input[0,5] == "HELO "
 			arg = "#{input}"+"IP:#{$ip}\n" +
 			"Port:#{$port}" +
 			"\nStudentID:#{student_id}"
@@ -20,10 +18,9 @@ def handle_client(c, count, server)
 		puts "It is being executed by thread #{Thread.current[:id]}"
 		c.puts (arg)
 		if input == "KILL_SERVICE\n"
-			c.close
+			# c.close
 			server.close
-			raise SystemExit
-			
+			raise SystemExit			
 		end
 	end
 end
@@ -34,15 +31,15 @@ if body.length!=0
 else
 	$ip = '127.0.0.1'
 end
-$port = '3457'
 if ARGV.length != 0 
 	$port = ARGV[0]
 end
 server = TCPServer.open($port)
 thread_pool = ThreadPool.new(5)	#to create a thread pool with 10 threads
-puts 'got the thread_pool'
+# puts 'got the thread_pool'
 count = 0
-while true
+while server
+	puts server.class
 	client = server.accept
 	thread_pool.schedule(client) do |c|
 		count += 1
