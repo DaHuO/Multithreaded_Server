@@ -18,7 +18,7 @@ def handle_client(c, count, server)
 		puts "the message sent back is \n<\n#{arg}\n>"
 		puts "It is being executed by thread #{Thread.current[:id]}"
 		if input == "KILL_SERVICE\n"
-			c.close
+			# c.close
 			server.close
 			raise SystemExit			
 		end
@@ -31,7 +31,7 @@ if body.length!=0
 else
 	$ip = '127.0.0.1'
 end
-$ip = '127.0.0.1'
+# $ip = '127.0.0.1'
 if ARGV.length != 0 
 	$port = ARGV[0]
 end
